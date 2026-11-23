@@ -126,6 +126,7 @@ export default function HomeScreen() {
       <ScrollView
         contentContainerStyle={[styles.scrollContent, { paddingBottom: 110 }]}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <DemoBanner />
 
@@ -461,8 +462,27 @@ export default function HomeScreen() {
               onPress={handleStartSpeaking}
             />
 
-            {/* Type Input Box */}
+            {/* Type Input Box / Wispr Flow Dictation */}
             <View style={styles.typedInputContainer}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                <Text style={{ color: colors.secondary, fontSize: scaleFont(14), fontWeight: '600' }}>
+                  {t.typeFallback}
+                </Text>
+                {typedText.length > 0 && (
+                  <Pressable
+                    onPress={() => setTypedText('')}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={t.clearText}
+                    style={{ padding: 4 }}
+                  >
+                    <Text style={{ color: colors.primaryContainer, fontSize: scaleFont(13), fontWeight: '700' }}>
+                      {t.clearText}
+                    </Text>
+                  </Pressable>
+                )}
+              </View>
+
               <View style={[styles.typedInputRow, { backgroundColor: colors.surfaceContainerLow, borderColor: colors.inputBorder }]}>
                 <TextInput
                   style={[styles.typedTextInput, { color: colors.onSurface, fontSize: scaleFont(17) }]}
@@ -470,7 +490,24 @@ export default function HomeScreen() {
                   placeholderTextColor={colors.outline}
                   value={typedText}
                   onChangeText={setTypedText}
+                  multiline={true}
+                  editable={true}
+                  selectTextOnFocus={false}
+                  autoCorrect={false}
+                  accessible={true}
+                  accessibilityLabel="Command text input. Focus field and dictate using Wispr Flow floating bubble."
                 />
+                {typedText.length > 0 && (
+                  <Pressable
+                    onPress={() => setTypedText('')}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={t.clearText}
+                    style={{ padding: 8 }}
+                  >
+                    <MaterialIcons name="close" size={20} color={colors.secondary} />
+                  </Pressable>
+                )}
                 <Pressable
                   onPress={handleSendTyped}
                   accessible={true}
@@ -481,6 +518,15 @@ export default function HomeScreen() {
                   <MaterialIcons name="send" size={22} color={colors.onPrimary} />
                 </Pressable>
               </View>
+
+              {/* Wispr Flow tip row */}
+              <View style={[styles.wisprFlowTip, { backgroundColor: colors.surfaceContainerLow }]}>
+                <MaterialIcons name="mic" size={18} color={colors.primaryContainer} style={{ marginRight: 6 }} />
+                <Text style={{ flex: 1, color: colors.secondary, fontSize: scaleFont(13), lineHeight: 18 }}>
+                  {t.wisprFlowHint}
+                </Text>
+              </View>
+
               <Text style={{ color: colors.secondary, fontSize: scaleFont(13), marginTop: 4, paddingLeft: 4 }}>
                 {t.tapSendWhenDone}
               </Text>
@@ -881,6 +927,13 @@ const styles = StyleSheet.create({
     borderRadius: Radii.default,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  wisprFlowTip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: Radii.sm,
+    marginTop: 8,
   },
   quickAccessSection: {
     marginTop: 20,

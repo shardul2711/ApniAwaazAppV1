@@ -132,4 +132,17 @@ export const en = {
   slowSpeed: 'Slow',
   normalSpeed: 'Normal',
   fastSpeed: 'Fast',
+
+  // Wispr Flow Voice Dictation
+  wisprFlowTitle: 'Wispr Flow Voice Dictation',
+  wisprFlowSubtitle: 'Dictate commands using the official Wispr Flow Android floating bubble in Marathi, Hindi, or English.',
+  wisprFlowHint: 'Tap to focus, then use your Wispr Flow floating bubble to dictate.',
+  wisprFlowInstallBtn: 'Get Wispr Flow on Play Store',
+  wisprFlowStep1: '1. Install official Wispr Flow from Google Play Store.',
+  wisprFlowStep2: '2. Sign in to your account.',
+  wisprFlowStep3: '3. Grant Microphone and Display over other apps permissions.',
+  wisprFlowStep4: '4. Enable the Wispr Flow Accessibility service in Android Settings.',
+  wisprFlowStep5: '5. Select dictation languages (Hindi, Marathi, English).',
+  wisprFlowStep6: '6. Return to Apni Awaaz, tap the input box, and tap the floating bubble to speak.',
+  clearText: 'Clear text',
 };

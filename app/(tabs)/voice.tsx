@@ -6,6 +6,8 @@ import {
   ScrollView,
   TextInput,
   Pressable,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -98,102 +100,151 @@ export default function VoiceScreen() {
   };
 
   return (
-    <View style={[styles.screen, { backgroundColor: colors.canvas, paddingTop: insets.top }]}>
-      <AccessibleHeader title={t.tabSpeak} />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <View style={[styles.screen, { backgroundColor: colors.canvas, paddingTop: insets.top }]}>
+        <AccessibleHeader title={t.tabSpeak} />
 
-      <ScrollView contentContainerStyle={[styles.content, { paddingBottom: 120 }]}>
-        <DemoBanner />
+        <ScrollView
+          contentContainerStyle={[styles.content, { paddingBottom: 120 }]}
+          keyboardShouldPersistTaps="handled"
+        >
+          <DemoBanner />
 
-        <View style={styles.centerContainer}>
-          <Text style={[styles.headline, { color: colors.onSurface, fontSize: scaleFont(26) }]}>
-            {voiceState === 'listening'
-              ? t.listening
-              : voiceState === 'processing'
-              ? t.checkingRequest
-              : voiceState === 'review'
-              ? t.tripPreview
-              : voiceState === 'result'
-              ? t.autoIsBooked
-              : t.whatCanIHelpWith}
-          </Text>
-
-          {/* Central Voice Orb */}
-          <VoiceOrb
-            state={voiceState}
-            onPress={voiceState === 'listening' ? handleStopAndReview : handleStartVoice}
-          />
-
-          {/* Live Transcript / Assistant Response Card */}
-          {(transcript || assistantResponse) && (
-            <View style={[styles.transcriptBox, { backgroundColor: colors.surfaceContainerLow, borderColor: colors.borderDefault }]}>
-              {transcript ? (
-                <Text style={[styles.transcriptText, { color: colors.primaryContainer, fontSize: scaleFont(19) }]}>
-                  “{transcript}”
-                </Text>
-              ) : null}
-              {assistantResponse ? (
-                <Text style={[styles.assistantText, { color: colors.onSurface, fontSize: scaleFont(17) }]}>
-                  {assistantResponse}
-                </Text>
-              ) : null}
-            </View>
-          )}
-
-          {/* Confirmation Controls during Review State */}
-          {voiceState === 'review' && activeAction && (
-            <View style={styles.actionReviewContainer}>
-              <AccessibleButton
-                label={t.confirm}
-                variant="primary"
-                icon={<MaterialIcons name="check-circle" size={24} color={colors.onPrimary} />}
-                onPress={handleConfirmAction}
-              />
-              <AccessibleButton
-                label={t.cancel}
-                variant="secondary"
-                onPress={resetVoiceSession}
-              />
-            </View>
-          )}
-
-          {/* Result State Return */}
-          {voiceState === 'result' && (
-            <View style={{ width: '100%', marginTop: 16 }}>
-              <AccessibleButton
-                label={t.imReady}
-                variant="primary"
-                onPress={resetVoiceSession}
-              />
-            </View>
-          )}
-
-          {/* Fallback Keyboard Dictation Box */}
-          <View style={styles.keyboardFallbackBox}>
-            <Text style={[styles.keyboardTitle, { color: colors.secondary, fontSize: scaleFont(15) }]}>
-              {t.typeFallback}
+          <View style={styles.centerContainer}>
+            <Text style={[styles.headline, { color: colors.onSurface, fontSize: scaleFont(26) }]}>
+              {voiceState === 'listening'
+                ? t.listening
+                : voiceState === 'processing'
+                ? t.checkingRequest
+                : voiceState === 'review'
+                ? t.tripPreview
+                : voiceState === 'result'
+                ? t.autoIsBooked
+                : t.whatCanIHelpWith}
             </Text>
-            <View style={[styles.inputRow, { backgroundColor: colors.surfaceContainerLowest, borderColor: colors.inputBorder }]}>
-              <TextInput
-                style={[styles.input, { color: colors.onSurface, fontSize: scaleFont(17) }]}
-                placeholder={t.typePlaceholder}
-                placeholderTextColor={colors.outline}
-                value={typedInput}
-                onChangeText={setTypedInput}
-              />
-              <Pressable
-                onPress={handleSendText}
-                accessible={true}
-                accessibilityRole="button"
-                accessibilityLabel={t.send}
-                style={[styles.sendBtn, { backgroundColor: colors.primaryContainer }]}
-              >
-                <MaterialIcons name="send" size={22} color={colors.onPrimary} />
-              </Pressable>
+
+            {/* Central Voice Orb */}
+            <VoiceOrb
+              state={voiceState}
+              onPress={voiceState === 'listening' ? handleStopAndReview : handleStartVoice}
+            />
+
+            {/* Live Transcript / Assistant Response Card */}
+            {(transcript || assistantResponse) && (
+              <View style={[styles.transcriptBox, { backgroundColor: colors.surfaceContainerLow, borderColor: colors.borderDefault }]}>
+                {transcript ? (
+                  <Text style={[styles.transcriptText, { color: colors.primaryContainer, fontSize: scaleFont(19) }]}>
+                    “{transcript}”
+                  </Text>
+                ) : null}
+                {assistantResponse ? (
+                  <Text style={[styles.assistantText, { color: colors.onSurface, fontSize: scaleFont(17) }]}>
+                    {assistantResponse}
+                  </Text>
+                ) : null}
+              </View>
+            )}
+
+            {/* Confirmation Controls during Review State */}
+            {voiceState === 'review' && activeAction && (
+              <View style={styles.actionReviewContainer}>
+                <AccessibleButton
+                  label={t.confirm}
+                  variant="primary"
+                  icon={<MaterialIcons name="check-circle" size={24} color={colors.onPrimary} />}
+                  onPress={handleConfirmAction}
+                />
+                <AccessibleButton
+                  label={t.cancel}
+                  variant="secondary"
+                  onPress={resetVoiceSession}
+                />
+              </View>
+            )}
+
+            {/* Result State Return */}
+            {voiceState === 'result' && (
+              <View style={{ width: '100%', marginTop: 16 }}>
+                <AccessibleButton
+                  label={t.imReady}
+                  variant="primary"
+                  onPress={resetVoiceSession}
+                />
+              </View>
+            )}
+
+            {/* Fallback Keyboard / Wispr Flow Dictation Box */}
+            <View style={styles.keyboardFallbackBox}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                <Text style={[styles.keyboardTitle, { color: colors.secondary, fontSize: scaleFont(15) }]}>
+                  {t.typeFallback}
+                </Text>
+                {typedInput.length > 0 && (
+                  <Pressable
+                    onPress={() => setTypedInput('')}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={t.clearText}
+                    style={{ padding: 4 }}
+                  >
+                    <Text style={{ color: colors.primaryContainer, fontSize: scaleFont(13), fontWeight: '700' }}>
+                      {t.clearText}
+                    </Text>
+                  </Pressable>
+                )}
+              </View>
+
+              <View style={[styles.inputRow, { backgroundColor: colors.surfaceContainerLowest, borderColor: colors.inputBorder }]}>
+                <TextInput
+                  style={[styles.input, { color: colors.onSurface, fontSize: scaleFont(17) }]}
+                  placeholder={t.typePlaceholder}
+                  placeholderTextColor={colors.outline}
+                  value={typedInput}
+                  onChangeText={setTypedInput}
+                  multiline={true}
+                  editable={true}
+                  selectTextOnFocus={false}
+                  autoCorrect={false}
+                  accessible={true}
+                  accessibilityLabel="Command text input. Focus field and dictate using Wispr Flow floating bubble."
+                />
+                {typedInput.length > 0 && (
+                  <Pressable
+                    onPress={() => setTypedInput('')}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={t.clearText}
+                    style={{ padding: 8 }}
+                  >
+                    <MaterialIcons name="close" size={20} color={colors.secondary} />
+                  </Pressable>
+                )}
+                <Pressable
+                  onPress={handleSendText}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel={t.send}
+                  style={[styles.sendBtn, { backgroundColor: colors.primaryContainer }]}
+                >
+                  <MaterialIcons name="send" size={22} color={colors.onPrimary} />
+                </Pressable>
+              </View>
+
+              {/* Wispr Flow live dictation tip */}
+              <View style={styles.wisprTipRow}>
+                <MaterialIcons name="graphic-eq" size={16} color={colors.primaryContainer} />
+                <Text style={{ color: colors.secondary, fontSize: scaleFont(13), marginLeft: 6, flex: 1 }}>
+                  {t.wisprFlowHint}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -263,5 +314,11 @@ const styles = StyleSheet.create({
     borderRadius: Radii.default,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  wisprTipRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 6,
+    paddingHorizontal: 2,
   },
 });

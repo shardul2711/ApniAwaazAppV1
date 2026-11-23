@@ -134,4 +134,17 @@ export const hi: typeof en = {
   slowSpeed: 'धीमी',
   normalSpeed: 'सामान्य',
   fastSpeed: 'तेज़',
+
+  // Wispr Flow Voice Dictation
+  wisprFlowTitle: 'Wispr Flow बोलकर टाइप करें',
+  wisprFlowSubtitle: 'आधिकारिक Wispr Flow एंड्रॉइड फ़्लोटिंग बबल द्वारा हिन्दी, मराठी या अंग्रेज़ी में बोलें।',
+  wisprFlowHint: 'बॉक्स पर टैप करें, फिर बोलने के लिए Wispr Flow फ़्लोटिंग बबल दबाएँ।',
+  wisprFlowInstallBtn: 'Play Store से Wispr Flow इंस्टॉल करें',
+  wisprFlowStep1: '1. Google Play Store से आधिकारिक Wispr Flow ऐप इंस्टॉल करें।',
+  wisprFlowStep2: '2. अपने खाते में साइन इन करें।',
+  wisprFlowStep3: '3. माइक्रोफ़ोन और अन्य ऐप के ऊपर दिखाने (Display over other apps) की अनुमति दें।',
+  wisprFlowStep4: '4. एंड्रॉइड सेटिंग्स में Wispr Flow एक्सेसिबिलिटी सेवा चालू करें।',
+  wisprFlowStep5: '5. अपनी भाषा चुनें (हिन्दी, मराठी, English)।',
+  wisprFlowStep6: '6. अपनी आवाज़ ऐप में आकर इनपुट बॉक्स पर टैप करें और फ़्लोटिंग बबल दबाकर बोलें।',
+  clearText: 'हटाएँ',
 };

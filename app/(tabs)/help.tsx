@@ -6,6 +6,7 @@ import {
   ScrollView,
   Pressable,
   Switch,
+  Linking,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -242,6 +243,53 @@ export default function HelpSettingsScreen() {
               </Pressable>
             ))}
           </View>
+        </View>
+
+        {/* 5. Wispr Flow Voice Dictation Setup Guide */}
+        <View style={[styles.settingsCard, { backgroundColor: colors.surfaceContainerLowest, borderColor: colors.borderDefault }]}>
+          <View style={styles.cardHeaderRow}>
+            <MaterialIcons name="graphic-eq" size={24} color={colors.primaryContainer} />
+            <Text style={[styles.cardTitle, { color: colors.onSurface, fontSize: scaleFont(19) }]}>
+              {t.wisprFlowTitle}
+            </Text>
+          </View>
+          <Text style={{ color: colors.secondary, fontSize: scaleFont(14), marginTop: 2, marginBottom: 10 }}>
+            {t.wisprFlowSubtitle}
+          </Text>
+
+          <View style={[styles.previewBox, { backgroundColor: colors.surfaceContainerLow }]}>
+            <Text style={{ color: colors.onSurface, fontSize: scaleFont(14), lineHeight: 22, marginBottom: 4 }}>
+              {t.wisprFlowStep1}
+            </Text>
+            <Text style={{ color: colors.onSurface, fontSize: scaleFont(14), lineHeight: 22, marginBottom: 4 }}>
+              {t.wisprFlowStep2}
+            </Text>
+            <Text style={{ color: colors.onSurface, fontSize: scaleFont(14), lineHeight: 22, marginBottom: 4 }}>
+              {t.wisprFlowStep3}
+            </Text>
+            <Text style={{ color: colors.onSurface, fontSize: scaleFont(14), lineHeight: 22, marginBottom: 4 }}>
+              {t.wisprFlowStep4}
+            </Text>
+            <Text style={{ color: colors.onSurface, fontSize: scaleFont(14), lineHeight: 22, marginBottom: 4 }}>
+              {t.wisprFlowStep5}
+            </Text>
+            <Text style={{ color: colors.onSurface, fontSize: scaleFont(14), lineHeight: 22 }}>
+              {t.wisprFlowStep6}
+            </Text>
+          </View>
+
+          <Pressable
+            onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=com.wispr.flowapp')}
+            style={[styles.testVoiceBtn, { backgroundColor: colors.primaryContainer, marginTop: 12 }]}
+            accessible={true}
+            accessibilityRole="link"
+            accessibilityLabel={t.wisprFlowInstallBtn}
+          >
+            <MaterialIcons name="open-in-new" size={20} color={colors.onPrimary} />
+            <Text style={{ color: colors.onPrimary, fontSize: scaleFont(15), fontWeight: '700', marginLeft: 8 }}>
+              {t.wisprFlowInstallBtn}
+            </Text>
+          </Pressable>
         </View>
 
         {/* 5. Navigation Links: Family Setup Portal & Activity Log */}
