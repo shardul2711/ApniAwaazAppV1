@@ -8,6 +8,7 @@ module.exports = {
         jsx: 'react',
         module: 'commonjs',
         target: 'es2020',
+        types: ['jest'],
       },
     }],
   },

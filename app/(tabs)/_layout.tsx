@@ -48,8 +48,12 @@ export default function TabLayout() {
         name="index"
         options={{
           title: t.tabToday,
-          tabBarIcon: ({ color, focused }) => (
-            <MaterialIcons name="calendar-today" size={26} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="calendar-today"
+              size={26}
+              color={focused ? colors.primaryContainer : colors.onSurfaceVariant}
+            />
           ),
         }}
       />
@@ -57,8 +61,12 @@ export default function TabLayout() {
         name="medicine"
         options={{
           title: t.tabMedicine,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="medication" size={26} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="medication"
+              size={26}
+              color={focused ? colors.primaryContainer : colors.onSurfaceVariant}
+            />
           ),
         }}
       />
@@ -107,8 +115,12 @@ export default function TabLayout() {
         name="family"
         options={{
           title: t.tabFamily,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="family-restroom" size={26} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="family-restroom"
+              size={26}
+              color={focused ? colors.primaryContainer : colors.onSurfaceVariant}
+            />
           ),
         }}
       />
@@ -116,8 +128,12 @@ export default function TabLayout() {
         name="help"
         options={{
           title: t.tabHelp,
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="settings-accessibility" size={26} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <MaterialIcons
+              name="settings-accessibility"
+              size={26}
+              color={focused ? colors.primaryContainer : colors.onSurfaceVariant}
+            />
           ),
         }}
       />
